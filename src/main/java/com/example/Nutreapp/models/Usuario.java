@@ -5,12 +5,24 @@ import java.util.UUID;
 import com.example.Nutreapp.models.helpers.Departamentos;
 import com.example.Nutreapp.models.helpers.Rol;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+
 public class Usuario {
     private UUID id;
-    private String nombre; 
+    private String nombre;
+
+    @Column(name = "correo", nullable = false, unique = true, length = 80)
     private String correo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable = false)
     private Rol rol;
+
+    @Column(name = "departamento", nullable = false)
     private Departamentos departamento;
+
+    @Column(name = "contrasena", nullable = false, length = 100)
     private String contrasena;
     
     // Constructor vacío

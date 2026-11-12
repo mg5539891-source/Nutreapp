@@ -1,13 +1,36 @@
 package com.example.Nutreapp.models;
 
+import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "videos")
 public class Video {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(name = "titulo", nullable = false, length = 150)
     private String titulo;
+
+    @Column(name = "descripcion", length = 500)
     private String descripcion;
+
+    @Column(name = "url", nullable = false, length = 255)
     private String url;
+
+    // creando relaciones 
+    @OneToMany(mappedBy = "video")
+    private List<Visualizacion> visualizaciones;
 
     public Video() {
     }
@@ -19,7 +42,7 @@ public class Video {
         this.url = url;
     }
 
-    // Getters and Setters
+    // Getters y Setters
     public UUID getId() {
         return id;
     }
@@ -50,5 +73,13 @@ public class Video {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public List<Visualizacion> getVisualizaciones() {
+        return visualizaciones;
+    }
+
+    public void setVisualizaciones(List<Visualizacion> visualizaciones) {
+        this.visualizaciones = visualizaciones;
     }
 }

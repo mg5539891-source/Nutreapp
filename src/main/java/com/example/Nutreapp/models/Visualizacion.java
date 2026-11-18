@@ -91,4 +91,13 @@ public class Visualizacion {
     public void setVideo(Video video) {
         this.video = video;
     }
+
+    public Object getFecha() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFecha'");
+    }
+
+    public void setFecha(Object fecha) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

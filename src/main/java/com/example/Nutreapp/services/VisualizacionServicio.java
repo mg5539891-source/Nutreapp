@@ -7,14 +7,14 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Nutreapp.models.Visualizacion;
-
 
 @Service 
 public class VisualizacionServicio {
 
-    // INYECCIÓN DE DEPENDENCIAS
+    // INYECCIÓN DE DEPENDENCIAS 
     @Autowired 
     private IVisualizacionRepositorio repositorio; 
 
@@ -22,24 +22,37 @@ public class VisualizacionServicio {
     public Visualizacion guardar(Visualizacion datos) {
         return this.repositorio.save(datos);
     }
-}
     
-    //metodo para buscar por id
-    public Visualizacion buscarPorId(UUID id){
-        Optional<Visualizacion> visualizacionBuscada =this.Repositorio.findById(id);
-        if(!visualizacionBuscada.isPresent()){
+    // Método para buscar por id
+    public Visualizacion buscarPorId(UUID id) {
+        Optional<Visualizacion> visualizacionBuscada = this.repositorio.findById(id);
+        if (!visualizacionBuscada.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id no encontrado");
-
-      } else {
-        return visualizacionBuscada.get();
-      }
+        } else {
+            return visualizacionBuscada.get();
+        }
     }
     
-    //metodo para buscar todos
-    public List<Visualizacion> buscarTodos(){
-        return this.Repositorio.findAll();
+    // Método para buscar todos
+    public List<Visualizacion> buscarTodos() {
+        return this.repositorio.findAll();
     }
+} 
     //metodo para modificar
+    public Visualizacion modificar(UUID id, Visualizacion datos) {
+        Optional<Visualizacion> visualizacionBuscada = this.repositorio.findById(id);
+        if (!visualizacionBuscada.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id no encontrado");
+        } else {
+            Visualizacion visualizacionExistente = visualizacionBuscada.get();
+            // Actualizar los campos de la visualización existente con los datos proporcionados
+            visualizacionExistente.setUsuario(datos.getUsuario());
+            visualizacionExistente.setVideo(datos.getVideo());
+            visualizacionExistente.setFecha(datos.getFecha());
+            // Agrega aquí cualquier otro campo que desees actualizar
+            return this.repositorio.save(visualizacionExistente);
+        }
+    }
     
     //metodo para eliminar
     

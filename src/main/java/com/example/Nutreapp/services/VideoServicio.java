@@ -41,6 +41,20 @@ public class VideoServicio {
     }
     
     //metodo para modificar
+    public Video modificar(UUID id, Video datos){
+        Optional<Video> videoBuscado =this.Repositorio.findById(id);
+        if(!videoBuscado.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id no encontrado");
+      } else {
+        Video videoExistente = videoBuscado.get();
+        // Actualizar los campos del video existente con los datos proporcionados
+        videoExistente.setTitulo(datos.getTitulo());
+        videoExistente.setDescripcion(datos.getDescripcion());
+        videoExistente.setUrl(datos.getUrl());
+        // Agrega aquí cualquier otro campo que desees actualizar
+        return this.Repositorio.save(videoExistente);
+      }
+    }
     
     //metodo para eliminar
     

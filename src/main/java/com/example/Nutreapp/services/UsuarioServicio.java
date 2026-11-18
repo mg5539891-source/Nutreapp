@@ -62,8 +62,18 @@ public class UsuarioServicio {
         return this.Repositorio.save(usuarioExistente);
       }
     }
-    
     //metodo para eliminar
+    public boolean eliminar(UUID id){
+        Optional<Usuario> usuarioBuscado =this.Repositorio.findById(id);
+        if(!usuarioBuscado.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id no encontrado");
+      } else {
+        this.Repositorio.deleteById(id);
+        return true;
+      }
+    }
+    
+
     
     //metodo para buscar por depto y rol
     
